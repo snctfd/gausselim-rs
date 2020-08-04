@@ -1,4 +1,4 @@
-use std::ops::Index;
+use std::ops::{Index, IndexMut};
 use std::{fmt, ptr};
 use std::str::FromStr;
 use std::error::Error;
@@ -26,10 +26,7 @@ impl Matrix {
         let c = self.cols;
         assert!(row < self.rows);
 
-        // TODO: add mutable indexing for matrix
-        self.matrix[row * c .. (row + 1) * c]
-            .iter_mut()
-            .for_each(|x| *x *= val);
+        self[row].iter_mut().for_each(|x| *x *= val);
     }
 
     // adds the values in row j to the values in row i
@@ -55,6 +52,16 @@ impl Index<usize> for Matrix {
         let c = self.cols;
 
         &self.matrix[index * c .. (index + 1) * c]
+    }
+}
+
+impl IndexMut<usize> for Matrix {
+    // Returns the index'th row
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        assert!(index < self.rows);
+        let c = self.cols;
+
+        &mut self.matrix[index * c .. (index + 1) * c]
     }
 }
 
@@ -102,7 +109,6 @@ impl FromStr for Matrix {
         })
     }
 }
-
 
 #[cfg(test)]
 mod tests {
