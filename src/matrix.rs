@@ -3,10 +3,10 @@ use std::{fmt, ptr};
 use std::str::FromStr;
 use std::error::Error;
 
-struct Matrix {
+pub struct Matrix {
     matrix: Vec<f32>,
-    rows: usize,
-    cols: usize,
+    pub rows: usize,
+    pub cols: usize,
 }
 
 impl Matrix {
