@@ -10,6 +10,14 @@ pub struct Matrix {
 }
 
 impl Matrix {
+    fn new(contents: Vec<f32>, rows: usize, cols: usize) -> Matrix {
+        Self {
+            matrix: contents,
+            rows,
+            cols
+        }
+    }
+
     fn swap_rows(&mut self, i: usize, j: usize) {
         let c = self.cols;
         assert!(i < self.rows);
@@ -133,6 +141,14 @@ mod tests {
             rows: 3,
             cols: 2
         }
+    }
+
+    #[test]
+    fn new() {
+        let a = Matrix::new(vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2, 3);
+
+        assert_eq!(a[1], [4.0, 5.0, 6.0]);
+        assert_eq!(a[0][2], 3.0);
     }
 
     #[test]
